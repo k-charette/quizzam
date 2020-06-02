@@ -28,13 +28,17 @@ const App = () => {
 
   // console.log(quizInfo[0])
   return (
-    <div className="App">
-      <div>This is where the question will be</div>
-      <div>
-        <div>Answer 1</div>
-        <div>Answer 2</div>
-        <div>Answer 3</div>
-        <div>Answer 4</div>
+    <div className='container'>
+      <div className='bg-white p-16 rounded-lg shadow-md'>
+        <h2 className='text-3xl'>
+          This is where the question will be
+        </h2>
+      </div>
+      <div className='flex flex-wrap mt-4 justify-around'>
+        <button className='bg-white w-2/5 p-4 mb-4 font-semibold rounded shadow'>Answer 1</button>
+        <button className='bg-white w-2/5 p-4 mb-4 font-semibold rounded shadow'>Answer 2</button>
+        <button className='bg-white w-2/5 p-4 font-semibold rounded shadow'>Answer 3</button>
+        <button className='bg-white w-2/5 p-4 font-semibold rounded shadow'>Answer 4</button>
       </div>
       {/* {
         quizInfo.map((trivia) => (
