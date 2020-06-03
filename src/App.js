@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import './styles/app.css'
-
+import TriviaData from './components/TriviaData'
 
 const App = () => {
 
   const API_URL = 'https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple'
 
-  const [quizInfo, setQuizInfo] = useState([])
+  const [questions, setQuestions] = useState([])
 
   useEffect(() => {
-    fetch(`${API_URL}`)
+    fetch(API_URL)
     .then((response) => {
       if (response.ok){
         return response
@@ -19,45 +19,25 @@ const App = () => {
           throw(error)
       }
     })
-    .then(response => response.json())
-    .then(body => {
-      setQuizInfo(body.results)
+    .then((response) => response.json())
+    .then((data) => {
+      setQuestions(data.results)
     })
     .catch(error => console.log(`Error in fetch ${error.message}`))
   }, [])
 
-  // console.log(quizInfo[0])
-  return (
+  const handleAnswer = () => {
+    // check for the answer
+  }
+
+  return questions.length > 0 ? (
     <div className='container'>
-      <div className='bg-white p-16 rounded-lg shadow-md'>
-        <h2 className='text-3xl'>
-          This is where the question will be
-        </h2>
-      </div>
-      <div className='flex flex-wrap mt-4 justify-around'>
-        <button className='bg-white w-2/5 p-4 mb-4 font-semibold rounded shadow'>Answer 1</button>
-        <button className='bg-white w-2/5 p-4 mb-4 font-semibold rounded shadow'>Answer 2</button>
-        <button className='bg-white w-2/5 p-4 font-semibold rounded shadow'>Answer 3</button>
-        <button className='bg-white w-2/5 p-4 font-semibold rounded shadow'>Answer 4</button>
-      </div>
-      {/* {
-        quizInfo.map((trivia) => (
-          <div>
-            <div>
-              <ul>
-                <li>{trivia.incorrect_answers[0]} </li>
-                <li>{trivia.incorrect_answers[1]} </li>
-                <li>{trivia.incorrect_answers[2]} </li>
-                <li>{trivia.correct_answer}</li>
-              </ul>
-            </div>
-            <div>        
-            </div>
-          </div>       
-        ))
-      } */}
+      <TriviaData data={questions[0]} handleAnswer={handleAnswer}/>
+      
     </div>
-  );
+    ) : ( 
+      <h1 className='text-xl font-bold'>Loading...</h1>
+    )
 }
 
 export default App;
