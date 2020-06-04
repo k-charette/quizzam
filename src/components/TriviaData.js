@@ -1,8 +1,6 @@
 import React from 'react'
 
-const TriviaData = ({ showAnswers, handleNextQuestion, handleAnswer, data: { question, correct_answer, incorrect_answers }}) => {
-
-    const shuffledAnswer = [correct_answer, ...incorrect_answers].sort(() => Math.random() - 0.5)
+const TriviaData = ({ showAnswers, handleNextQuestion, handleAnswer, data: { question, correct_answer, answers }}) => {
 
     return (
         <div className='flex flex-col'>
@@ -10,7 +8,7 @@ const TriviaData = ({ showAnswers, handleNextQuestion, handleAnswer, data: { que
                 <h2 className='text-3xl' dangerouslySetInnerHTML={{ __html: question }}/>
             </div> 
             <div className='grid grid-cols-2 gap-6 mt-8'>
-                {shuffledAnswer.map((answer, id) => {
+                {answers.map((answer, id) => {
                     const bgColor = showAnswers ? 
                     answer === correct_answer ? 
                     'bg-green-500' : 'bg-red-500' : 'bg-white'

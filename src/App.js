@@ -24,7 +24,14 @@ const App = () => {
     })
     .then((response) => response.json())
     .then((data) => {
-      setQuestions(data.results)
+      const questions = data.results.map((question) => ({
+        ...question,
+        answers: [
+          question.correct_answer,
+          ...question.incorrect_answers,
+        ].sort(() => Math.random() - 0.5),
+      }))
+      setQuestions(questions)
     })
     .catch(error => console.log(`Error in fetch ${error.message}`))
   }, [])
