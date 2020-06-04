@@ -9,7 +9,7 @@ const App = () => {
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [score, setScore] = useState(0)
-  const [gameEnded, setGameEnded] = useState(false)
+  const [showAnswers, setShowAnswers] = useState(false)
 
   useEffect(() => {
     fetch(API_URL)
@@ -30,35 +30,44 @@ const App = () => {
   }, [])
 
   const handleAnswer = (answer) => {
-    const newIndex = currentIndex + 1
-    setCurrentIndex(newIndex)
-
-    if (answer === questions[currentIndex].correct_answer){
-    //increase the score
-      setScore(score + 1)
-    }
+    if (!showAnswers) { // prevent double answers
+      if (answer === questions[currentIndex].correct_answer){
+      //increase the score
+        setScore(score + 1)
+      }
+  }
+    setShowAnswers(true)
     // check for the answer
-    
-    if (newIndex >= questions.length){
-      setGameEnded(true)
-    }
     // if correct show next question
 
 
     // change score if correct
+    // const newIndex = currentIndex + 1
+    // setCurrentIndex(newIndex)
   }
 
-  return gameEnded ? (
-    <h1 className='text-3xl text-black font-bold'> Your score was {score}</h1>
-  ) : (questions.length > 0 ? (
+  const handleNextQuestion = () => {
+    setShowAnswers(false)
+
+    setCurrentIndex(currentIndex + 1)
+  }
+
+  return questions.length > 0 ? (
     <div className='container'>
-      <TriviaData 
-        data={questions[currentIndex]}
-        handleAnswer={handleAnswer}/>
+      {currentIndex >= questions.length ? (
+      <h1 className='text-3xl text-black font-bold'> Your score was {score}</h1>
+      ) : (
+        <TriviaData 
+          data={questions[currentIndex]}
+          showAnswers={showAnswers}
+          handleAnswer={handleAnswer}
+          handleNextQuestion={handleNextQuestion}
+        />
+      )}
     </div>
     ) : ( 
       <h1 className='text-xl font-bold'>Loading...</h1>
-  ))
+  )
 }
 
 export default App;
