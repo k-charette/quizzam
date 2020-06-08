@@ -1,6 +1,6 @@
 # Trivia Quizzam
 
-Find out the weather in your current location or wherever! 
+Test your skills in this movie trivia app! 
 
 [LIVE DEMO](https://trivia-quizzam.netlify.app/)
 
